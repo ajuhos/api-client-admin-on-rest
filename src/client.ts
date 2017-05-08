@@ -76,12 +76,12 @@ export default (apiUrl: string, httpClient = fetchJSON) => {
         switch (type) {
             case RequestType.GET_LIST:
             case RequestType.GET_MANY_REFERENCE:
-                if (!headers.has('content-range')) {
-                    throw new Error('The Content-Range header is missing in the HTTP Response. The simple REST client expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare Content-Range in the Access-Control-Expose-Headers header?');
+                if (!headers.has('x-total-count')) {
+                    throw new Error('The X-Total-Count header is missing in the HTTP Response. The api-core REST client expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?');
                 }
                 return {
                     data: json,
-                    total: parseInt(headers.get('content-range').split('/').pop(), 10),
+                    total: parseInt(headers.get('x-total-count'), 10),
                 };
             case RequestType.CREATE:
                 return { data: { ...params.data, id: json.id } };
