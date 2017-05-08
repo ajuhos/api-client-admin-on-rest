@@ -38,7 +38,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                     limit: perPage
                 };
                 Object.keys(params.filter).forEach(f => query[f] = params.filter[f]);
-                url = `${apiUrl}/${resource}?${queryParameters(params)}`;
+                url = `${apiUrl}/${resource}?${queryParameters(query)}`;
                 break;
             }
             case RequestType.GET_ONE:
