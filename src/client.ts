@@ -18,7 +18,7 @@ const queryParameters = (query: any) => {
  * CREATE       => POST http://my.api.url/posts/123
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export default (apiUrl: string, httpClient = fetchJSON) => {
+export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
     /**
      * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
      * @param {String} resource Name of the resource to fetch, e.g. 'posts'
