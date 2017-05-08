@@ -90,6 +90,12 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
         }
     };
 
+    const request = (type: string, resource: string, params: any) => {
+        const {url, options} = convertRESTRequestToHTTP(type, resource, params);
+        return httpClient(url, options)
+            .then((response: any) => convertHTTPResponseToREST(response, type, resource, params));
+    };
+
     /**
      * @param {string} type Request type, e.g GET_LIST
      * @param {string} resource Resource name, e.g. "posts"
@@ -97,8 +103,14 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
      * @returns {Promise} the Promise for a REST response
      */
     return (type: string, resource: string, params: any) => {
-        const { url, options } = convertRESTRequestToHTTP(type, resource, params);
-        return httpClient(url, options)
-            .then((response: any) => convertHTTPResponseToREST(response, type, resource, params));
+        if(type === RequestType.GET_MANY) {
+            return Promise.all(
+                    params.ids.map((id: string) => request(RequestType.GET_ONE, resource, { id }))
+                )
+                .then((responses: any[]) => ({ data: responses.map(r => r.data) }))
+        }
+        else {
+            return request(type, resource, params)
+        }
     };
 };
