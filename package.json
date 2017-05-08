@@ -1,0 +1,22 @@
+{
+  "name": "api-client-admin-on-rest",
+  "version": "0.0.1",
+  "description": "REST client for the admin-on-rest package to work with api-core based APIs",
+  "main": "dist/index.js",
+  "scripts": {
+    "test": "tap dist/test/*.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ajuhos/api-client-admin-on-rest.git"
+  },
+  "author": "We Are Break <ajuhos@we-are-break.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/ajuhos/api-client-admin-on-rest/issues"
+  },
+  "homepage": "https://github.com/ajuhos/api-client-admin-on-rest#readme",
+  "dependencies": {
+    "admin-on-rest": "^1.0.1"
+  }
+}
