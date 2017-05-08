@@ -35,9 +35,22 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                 let query:any = {
                     sort:  order === 'ASC' ? '' : '-' + field,
                     page,
-                    limit: perPage
+                    limit: perPage,
+                    ...params.filter
                 };
-                Object.keys(params.filter).forEach(f => query[f] = params.filter[f]);
+                url = `${apiUrl}/${resource}?${queryParameters(query)}`;
+                break;
+            }
+            case RequestType.GET_MANY_REFERENCE: {
+                const { page, perPage } = params.pagination;
+                const { field, order } = params.sort;
+                const query = {
+                    sort:  order === 'ASC' ? '' : '-' + field,
+                    page,
+                    limit: perPage,
+                    ...params.filter,
+                    [params.target]: params.id
+                };
                 url = `${apiUrl}/${resource}?${queryParameters(query)}`;
                 break;
             }
