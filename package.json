@@ -1,6 +1,6 @@
 {
   "name": "api-client-admin-on-rest",
-  "version": "0.1.2",
+  "version": "0.1.3",
   "description": "REST client for the admin-on-rest package to work with api-core based APIs",
   "main": "dist/index.js",
   "scripts": {
