@@ -34,7 +34,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                 const { field, order } = params.sort;
                 let query:any = {
                     sort:  (order === 'ASC' ? '' : '-') + field,
-                    page,
+                    skip: (page-1) * perPage,
                     limit: perPage,
                     ...params.filter
                 };
@@ -46,7 +46,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                 const { field, order } = params.sort;
                 const query = {
                     sort:  (order === 'ASC' ? '' : '-') + field,
-                    page,
+                    skip: (page-1) * perPage,
                     limit: perPage,
                     ...params.filter,
                     [params.target]: params.id
