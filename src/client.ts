@@ -2,7 +2,25 @@ const RequestType = require('admin-on-rest/lib/rest/types'),
     fetchJSON = require('admin-on-rest/lib/util/fetch').fetchJson;
 
 const queryParameters = (query: any) => {
-    return Object.keys(query).map(q => q+'='+query[q]).join('&')
+    const list = [],
+        keys = Object.keys(query);
+
+    for (let key of keys) {
+        if(key === 'where') {
+            const filteredKeys = Object.keys(query.where);
+            for (let filteredKey of filteredKeys) {
+                const filters = Object.keys(query.where[filteredKey]);
+                for (let filter of filters) {
+                    list.push(`where[${filteredKey}][${filter}]=${query.where[filteredKey][filter]}`)
+                }
+            }
+        }
+        else {
+            list.push(`${key}=${query[key]}`)
+        }
+    }
+
+    return list.join('&')
 };
 
 /**
