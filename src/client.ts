@@ -75,6 +75,9 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
             case RequestType.GET_ONE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 break;
+            case RequestType.GET_MANY:
+                url = `${apiUrl}/${resource}?where[id][in]=${params.ids.join(',')}`;
+                break;
             case RequestType.UPDATE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 options.method = 'PUT';
@@ -134,14 +137,6 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
      * @returns {Promise} the Promise for a REST response
      */
     return (type: string, resource: string, params: any) => {
-        if(type === RequestType.GET_MANY) {
-            return Promise.all(
-                    params.ids.map((id: string) => request(RequestType.GET_ONE, resource, { id }))
-                )
-                .then((responses: any[]) => ({ data: responses.map(r => r.data) }))
-        }
-        else {
-            return request(type, resource, params)
-        }
+        return request(type, resource, params)
     };
 };
