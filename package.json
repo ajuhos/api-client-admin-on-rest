@@ -1,26 +1,26 @@
 {
-  "name": "api-client-admin-on-rest",
-  "version": "0.4.3",
-  "description": "REST client for the admin-on-rest package to work with api-core based APIs",
-  "main": "dist/index.js",
-  "scripts": {
-    "test": "tap dist/test/*.js",
-    "prepublish": "tsc"
-  },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/ajuhos/api-client-admin-on-rest.git"
-  },
-  "author": "We Are Break <ajuhos@we-are-break.com>",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/ajuhos/api-client-admin-on-rest/issues"
-  },
-  "homepage": "https://github.com/ajuhos/api-client-admin-on-rest#readme",
-  "dependencies": {
-    "admin-on-rest": "^1.3.3"
-  },
-  "devDependencies": {
-    "@types/node": "^9.4.6"
-  }
+    "name": "api-client-admin-on-rest",
+    "version": "0.6.39",
+    "description": "REST client for the admin-on-rest package to work with api-core based APIs",
+    "main": "dist/index.js",
+    "scripts": {
+        "test": "tap dist/test/*.js",
+        "prepublish": "tsc"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/ajuhos/api-client-admin-on-rest.git"
+    },
+    "author": "We Are Break <ajuhos@we-are-break.com>",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/ajuhos/api-client-admin-on-rest/issues"
+    },
+    "homepage": "https://github.com/ajuhos/api-client-admin-on-rest#readme",
+    "dependencies": {
+        "admin-on-rest": "^1.3.3"
+    },
+    "devDependencies": {
+        "@types/node": "^9.4.6"
+    }
 }
