@@ -5,7 +5,7 @@
   "main": "dist/index.js",
   "scripts": {
     "test": "tap dist/test/*.js",
-    "prepare": "tsc"
+    "prepublish": "tsc"
   },
   "repository": {
     "type": "git",
