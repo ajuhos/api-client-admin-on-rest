@@ -1,5 +1,4 @@
-const RequestType = require('admin-on-rest/lib/rest/types'),
-    fetchJSON = require('admin-on-rest/lib/util/fetch').fetchJson;
+import * as ReactAdmin from 'react-admin'
 
 const queryParameters = (query: any) => {
     const list = [],
@@ -36,7 +35,7 @@ const queryParameters = (query: any) => {
  * CREATE       => POST http://my.api.url/posts/123
  * DELETE       => DELETE http://my.api.url/posts/123
  */
-export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
+export const restClient = (apiUrl: string, httpClient = ReactAdmin.fetchUtils.fetchJson) => {
     /**
      * @param {String} type One of the constants appearing at the top if this file, e.g. 'UPDATE'
      * @param {String} resource Name of the resource to fetch, e.g. 'posts'
@@ -47,7 +46,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
         let url = '';
         const options: { method?: string, body?: any } = {};
         switch (type) {
-            case RequestType.GET_LIST: {
+            case ReactAdmin.GET_LIST: {
                 const { page, perPage } = params.pagination;
                 const { field, order } = params.sort;
                 let query:any = {
@@ -59,7 +58,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                 url = `${apiUrl}/${resource}?${queryParameters(query)}`;
                 break;
             }
-            case RequestType.GET_MANY_REFERENCE: {
+            case ReactAdmin.GET_MANY_REFERENCE: {
                 const { page, perPage } = params.pagination;
                 const { field, order } = params.sort;
                 const query = {
@@ -72,23 +71,23 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                 url = `${apiUrl}/${resource}?${queryParameters(query)}`;
                 break;
             }
-            case RequestType.GET_ONE:
+            case ReactAdmin.GET_ONE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 break;
-            case RequestType.GET_MANY:
+            case ReactAdmin.GET_MANY:
                 url = `${apiUrl}/${resource}?where[id][in]=${params.ids.join(',')}`;
                 break;
-            case RequestType.UPDATE:
+            case ReactAdmin.UPDATE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 options.method = 'PUT';
                 options.body = JSON.stringify(params.data);
                 break;
-            case RequestType.CREATE:
+            case ReactAdmin.CREATE:
                 url = `${apiUrl}/${resource}`;
                 options.method = 'POST';
                 options.body = JSON.stringify(params.data);
                 break;
-            case RequestType.DELETE:
+            case ReactAdmin.DELETE:
                 url = `${apiUrl}/${resource}/${params.id}`;
                 options.method = 'DELETE';
                 break;
@@ -108,8 +107,8 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
     const convertHTTPResponseToREST = (response: any, type: string, resource: string, params: any) => {
         const { headers, json } = response;
         switch (type) {
-            case RequestType.GET_LIST:
-            case RequestType.GET_MANY_REFERENCE:
+            case ReactAdmin.GET_LIST:
+            case ReactAdmin.GET_MANY_REFERENCE:
                 if (!headers.has('x-total-count')) {
                     throw new Error('The X-Total-Count header is missing in the HTTP Response. The api-core REST client expects responses for lists of resources to contain this header with the total number of results to build the pagination. If you are using CORS, did you declare X-Total-Count in the Access-Control-Expose-Headers header?');
                 }
@@ -117,7 +116,7 @@ export const restClient = (apiUrl: string, httpClient = fetchJSON) => {
                     data: json,
                     total: parseInt(headers.get('x-total-count'), 10),
                 };
-            case RequestType.CREATE:
+            case ReactAdmin.CREATE:
                 return { data: { ...params.data, id: json.id } };
             default:
                 return { data: json };
